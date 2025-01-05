@@ -5,10 +5,10 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 
 const Navbar = () => {
     const navOptions = <>
-        <li><Link className='hover:underline'>Home</Link></li>
+        <li><Link  to='/' className='hover:underline'>Home</Link></li>
         <li><Link className='hover:underline'>Contact US</Link></li>
         <li><Link className='hover:underline'>Dashboard</Link></li>
-        <li><Link className='hover:underline'>Our Menu</Link></li>
+        <li><Link to='/menu' className='hover:underline'>Our Menu</Link></li>
         <li><Link className='hover:underline'>Our Shop</Link></li>
 
 
