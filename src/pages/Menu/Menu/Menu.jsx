@@ -37,6 +37,8 @@ const Menu = () => {
             ></Cover>
 
 
+
+            {/* নিচের  সব গুলোর ডাটা লোড/map করা হয়েছে MenuCategory কম্পোনেন্ট এর ভিতরে const offered = menu.filter(item => item.category === 'offered')এর items={offered} কে প্রপ হিসাবে পাঠিয়ে */}
             {/* Offered Category section */}
 
             <div className='my-24'>
@@ -46,7 +48,7 @@ const Menu = () => {
                     subHeading={"Don't miss"}
                 ></SectionTitle>
 
-                <MenuCategory items={offered}></MenuCategory>
+                <MenuCategory items={offered}  title={'salad'}></MenuCategory>
 
             </div>
 
@@ -61,7 +63,7 @@ const Menu = () => {
                     subTitle={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
                 ></Cover>
 
-                <MenuCategory items={dessert}></MenuCategory>
+                <MenuCategory items={dessert} title={'dessert'}></MenuCategory>
 
             </div>
 
@@ -75,7 +77,7 @@ const Menu = () => {
                     subTitle={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
                 ></Cover>
 
-                <MenuCategory items={pizza}></MenuCategory>
+                <MenuCategory items={pizza} title={'pizza'}></MenuCategory>
 
             </div>
 
@@ -83,29 +85,29 @@ const Menu = () => {
             {/* SALADS Category section */}
             <div className='my-24'>
 
-<Cover
-    bgImg={saladBgImg}
-    title={'SALADS'}
-    subTitle={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
-></Cover>
+                <Cover
+                    bgImg={saladBgImg}
+                    title={'SALADS'}
+                    subTitle={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
+                ></Cover>
 
-<MenuCategory items={salad}></MenuCategory>
+                <MenuCategory items={salad} title={'salad'}></MenuCategory>
 
-</div>
+            </div>
 
 
             {/* Soup Category section */}
             <div className='my-24'>
 
-<Cover
-    bgImg={soupBgImg}
-    title={'SOUP'}
-    subTitle={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
-></Cover>
+                <Cover
+                    bgImg={soupBgImg}
+                    title={'SOUP'}
+                    subTitle={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
+                ></Cover>
 
-<MenuCategory items={soup}></MenuCategory>
+                <MenuCategory items={soup} title={'soup'}></MenuCategory>
 
-</div>
+            </div>
 
 
         </div>

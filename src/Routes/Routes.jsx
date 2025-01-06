@@ -3,6 +3,7 @@ import App from "../App";
 import Main from "../Main/Main";
 import Home from "../pages/Home/Home/Home";
 import Menu from "../pages/Menu/Menu/Menu";
+import Order from "../pages/Order/Order/Order";
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
         {
           path: "/menu",
           element: <Menu />,
+        },
+        {
+          path: "/order",
+          element: <Order />,
+        },
+        {
+          path: "/order/:category", //for dynamic tab category
+          element: <Order />,
         },
       ],
     },

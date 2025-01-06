@@ -6,10 +6,10 @@ import { IoPersonCircleSharp } from "react-icons/io5";
 const Navbar = () => {
     const navOptions = <>
         <li><Link  to='/' className='hover:underline'>Home</Link></li>
+        <li><Link to='/menu' className='hover:underline'>Our Menu</Link></li>
+        <li><Link to='/order/salad' className='hover:underline'>Food Order</Link></li>
         <li><Link className='hover:underline'>Contact US</Link></li>
         <li><Link className='hover:underline'>Dashboard</Link></li>
-        <li><Link to='/menu' className='hover:underline'>Our Menu</Link></li>
-        <li><Link className='hover:underline'>Our Shop</Link></li>
 
 
 
@@ -17,7 +17,7 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="navbar max-w-screen-xl mx-auto hover:text-opacity-100 fixed z-10  text-white bg-opacity-30 bg-black">
+            <div className="navbar max-w-screen-xl px-8 mx-auto hover:text-opacity-100 fixed z-10  text-white bg-opacity-30 bg-black">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

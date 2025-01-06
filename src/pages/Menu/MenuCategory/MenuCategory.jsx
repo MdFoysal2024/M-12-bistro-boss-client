@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
 import MenuItem from "../../Shared/ManuItem/MenuItem";
 
 
-const MenuCategory = ({ items }) => {
+const MenuCategory = ({ items, title }) => {
+    //{ items, title }------> props are coming from Menu.jsx
     return (
         <div>
 
@@ -15,8 +17,10 @@ const MenuCategory = ({ items }) => {
             </div>
 
             <div className='flex justify-center pt-12'>
+                <Link to={`/order/${title}`}>
 
-                <button className='btn text-xl   border-0 border-b-4 border-orange-600 hover:text-orange-600 hover:border-2 '>ORDER YOUR FAVOURITE FOOD</button>
+                    <button className='btn text-xl bg-orange-100  border-0 border-b-4 border-orange-600 hover:text-orange-600 hover:border-2 '>ORDER YOUR FAVOURITE FOOD</button>
+                </Link>
             </div>
 
 
