@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
 import MenuItem from '../../Shared/ManuItem/MenuItem';
+import useMenu from '../../../hooks/useMenu';
 
 const PopularMenu = () => {
 
-    const [menu, setMenu] = useState([])
+    // const [menu, setMenu] = useState([])
 
-    useEffect(() => {
-        fetch('menu.json')
-            .then(res => res.json())
-            .then(data => {
-                // setMenu(data)
-                const popularItems = data.filter(item => item.category === 'popular')
-                setMenu(popularItems);
-            })
-    }, [])
+    // useEffect(() => {
+    //     fetch('menu.json')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             // setMenu(data)
+    //             const popularItems = data.filter(item => item.category === 'popular')
+    //             setMenu(popularItems);
+    //         })
+    // }, [])
+
+
+    //এখানে useEffect() ব্যবহার না করে, custom hooks ব্যবহার করে data load করা হয়েছে । custom hooks ব্যবহার করে সব জায়গা হতে ডাটা লোড করা যাবে ।
+
+
+    const [menu] = useMenu();
+    const popular = menu.filter(item => item.category === 'popular')
 
 
     return (
@@ -28,7 +36,7 @@ const PopularMenu = () => {
 
             <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
                 {
-                    menu.map(item => <MenuItem
+                    popular.map(item => <MenuItem
                         key={item._id}
                         item={item}
                     ></MenuItem>)
