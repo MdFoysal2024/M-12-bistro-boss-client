@@ -1,17 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { TiShoppingCart } from "react-icons/ti";
 import { IoPersonCircleSharp } from "react-icons/io5";
+import { AuthContext } from '../../../providers/AuthProvider';
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
+    //console.log(user.email);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+
+
     const navOptions = <>
-        <li><Link  to='/' className='hover:underline'>Home</Link></li>
+        <li><Link to='/' className='hover:underline'>Home</Link></li>
         <li><Link to='/menu' className='hover:underline'>Our Menu</Link></li>
         <li><Link to='/order/salad' className='hover:underline'>Food Order</Link></li>
         <li><Link className='hover:underline'>Contact US</Link></li>
         <li><Link className='hover:underline'>Dashboard</Link></li>
 
+        {
+            user ? <>
 
+                <button onClick={handleLogOut}
+                    className="btn btn-warning font-bold">Log Out</button>
+            </> : <>
+                <li> <Link to='/login'>
+
+                    <button className='text-2xl p-2 mx-2 border-2  border-gray-500 rounded-full'><IoPersonCircleSharp /></button>
+                </Link></li>
+            </>
+        }
 
     </>
 
@@ -49,13 +75,20 @@ const Navbar = () => {
                             {navOptions}
                         </ul>
                     </div>
-                    <div>
+
+
+
+                    {/* <div>
                         <button className='text-2xl p-2 mx-2 border-2 border-gray-500  rounded-full'><TiShoppingCart /></button>
                     </div>
                     <div>
-                        <button className='text-2xl p-2 mx-2 border-2  border-gray-500 rounded-full'><IoPersonCircleSharp /></button>
-                    </div>
-                 
+                        <Link to='/login'>
+
+                            <button className='text-2xl p-2 mx-2 border-2  border-gray-500 rounded-full'><IoPersonCircleSharp /></button>
+                        </Link>
+                    </div> */}
+
+
                 </div>
             </div>
         </div>
