@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
@@ -13,9 +13,13 @@ const Login = () => {
   //const [showPassword, setShowPassword] = useState(false);
 
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/';
+
 
   const { signIn } = useContext(AuthContext);
-
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -33,14 +37,16 @@ const Login = () => {
         // setUser(user);
 
         Swal.fire({
-            title: 'Sign In',
-            text: 'Sign In Successfully',
-            icon: 'success',
-            confirmButtonText: 'Thank You'
+          title: 'Sign In',
+          text: 'Sign In Successfully',
+          icon: 'success',
+          confirmButtonText: 'Thank You'
         })
 
 
-        //navigate(location?.state ? location.state : "/");
+        //navigate(location?.state ? location.state : "/");-->  এই লাইনটা উপরের  ভেরিয়েবল const from = ...; এর ভিতরে রেখে এখানে শুধু  from কে আনা হইছে।
+
+        navigate(from, { replace: true });
       })
       .catch((error) => {
 

@@ -12,19 +12,38 @@ import AuthProvider from './providers/AuthProvider';
 
 
 
+//Tan Stack Query Code--->
+
+import {
+
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+const queryClient = new QueryClient()
+
+//Tan Stack Query Code--->
+
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 
     <AuthProvider>
 
-      <HelmetProvider>
+    {/* Tan Stack Query Provider Code---> */}
 
-        <div className='max-w-screen-xl mx-auto'>
-          <RouterProvider router={router} />
-        </div>
+      <QueryClientProvider client={queryClient}>
 
-      </HelmetProvider>
+        <HelmetProvider>
+
+          <div className='max-w-screen-xl mx-auto'>
+            <RouterProvider router={router} />
+          </div>
+
+        </HelmetProvider>
+
+      </QueryClientProvider>
+
 
     </AuthProvider>
 

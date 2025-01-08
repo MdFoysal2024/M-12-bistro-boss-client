@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -7,14 +7,15 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 import { useForm } from "react-hook-form"
+import Swal from "sweetalert2";
 
 const SignUp = () => {
 
 
-    const { createUser } = useContext(AuthContext);
-
+    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const navigate = useNavigate();
     //npm install react-hook-form ---> Advance form setup
-    const { register, handleSubmit, formState: { errors }, } = useForm()
+    const { register, handleSubmit, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
         console.log(data)
@@ -26,15 +27,23 @@ const SignUp = () => {
 
                 // setUser(user);
 
-                // Swal.fire({
-                //     title: 'Sign In',
-                //     text: 'Sign In Successfully',
-                //     icon: 'success',
-                //     confirmButtonText: 'Thank You'
-                // })
+                updateUserProfile(data.name, data.photoURL)
+                    .then(() => {
+                        console.log('User Profile Updated');
+                        reset();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
 
+                Swal.fire({
+                    title: 'Sign Up',
+                    text: 'SignUp Successfully',
+                    icon: 'success',
+                    confirmButtonText: 'Thank You'
+                });
 
-                //navigate(location?.state ? location.state : "/");
+                navigate("/");
             })
             .catch((error) => {
 
@@ -42,7 +51,7 @@ const SignUp = () => {
             });
     }
 
-    //console.log(watch("example")) //--->watch input value by passing the name of it. যদি আমরা ফর্মের ডাটা গুলো দেখি 
+
 
 
 
@@ -118,15 +127,22 @@ const SignUp = () => {
                         <label className="label">
                             <span className="label-text">User Name</span>
                         </label>
-                        <input type="text" name="name" {...register("name", { required: true })} placeholder="User Name Here" className="input input-bordered" />
+                        <input type="text" name="name" {...register("name", { required: true })} placeholder="Name Here" className="input input-bordered" />
                         {errors.name && <span className="text-red-600">Name field is required</span>}
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Photo URL</span>
+                        </label>
+                        <input type="text"  {...register("photoURL", { required: true })} placeholder="http://photoURL..." className="input input-bordered" />
+                        {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
                     </div>
 
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
-                        <input type="email" name="email" {...register("email", { required: true })} placeholder="email" className="input input-bordered" />
+                        <input type="email" name="email" {...register("email", { required: true })} placeholder="Email" className="input input-bordered" />
                         {errors.email && <span className="text-red-600">Email field is required</span>}
                     </div>
 
@@ -139,7 +155,7 @@ const SignUp = () => {
                             minLength: 6,
                             maxLength: 20,
                             pattern: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$&*])/
-                        })} placeholder="password" className="input input-bordered" />
+                        })} placeholder="Password" className="input input-bordered" />
 
                         {/* required error */}
                         {errors.password?.type === "required" && <span className="text-red-600">Password field is required</span>}

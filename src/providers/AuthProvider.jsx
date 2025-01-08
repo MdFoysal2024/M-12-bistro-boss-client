@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
 
 
@@ -12,36 +12,35 @@ const AuthProvider = ({ children }) => {
 
 
 
-
-
-
-
-
-
-
-   
-
-
-    //createUserWithEmailAndPassword---> এর ব্যবহার করা হয় নতুন User এর  Sign Up/Register বা করার জন্য
-
+    //createUserWithEmailAndPassword---> এর ব্যবহার করা হয় নতুন User এর  Sign Up/Register করার জন্য
     const createUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
- //signInWithEmailAndPassword---> এর ব্যবহার করা হয় নতুন User এর  Sign in/login করার জন্য
 
- const signIn = (email, password) => {
-    setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password)
-}
+    //signInWithEmailAndPassword---> এর ব্যবহার করা হয় নতুন User এর  Sign in/login করার জন্য
+    const signIn = (email, password) => {
+        setLoading(true);
+        return signInWithEmailAndPassword(auth, email, password)
+    }
 
- //signOut---> এর ব্যবহার করা হয়, signIn করা নতুন User কে logOut করার জন্য
 
- const logOut = () => {
-    setLoading(true);
-    return signOut(auth);
-}
+    //signOut---> এর ব্যবহার করা হয়, signIn করা নতুন User কে logOut করার জন্য
+    const logOut = () => {
+        setLoading(true);
+        return signOut(auth);
+    }
+
+
+    //updateProfile---> এর ব্যবহার করা হয় নতুন User এর  Sign Up/Register করার সময় User এর name ও photoURL যুক্ত করা এবং পরবর্তিতে আপডেট করার জন্য  
+
+    const updateUserProfile = (name, photo) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photo
+        })
+    }
 
 
 
@@ -67,7 +66,9 @@ const AuthProvider = ({ children }) => {
         loading,
         signIn,
         createUser,
-        logOut
+        updateUserProfile,
+        logOut,
+
     }
 
     return (

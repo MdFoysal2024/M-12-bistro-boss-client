@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import { TiShoppingCart } from "react-icons/ti";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { AuthContext } from '../../../providers/AuthProvider';
+import useCart from '../../../hooks/useCart';
 
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
     //console.log(user.email);
+
+  const [cart]  = useCart();
+
 
     const handleLogOut = () => {
         logOut()
@@ -23,14 +27,25 @@ const Navbar = () => {
         <li><Link to='/' className='hover:underline'>Home</Link></li>
         <li><Link to='/menu' className='hover:underline'>Our Menu</Link></li>
         <li><Link to='/order/salad' className='hover:underline'>Food Order</Link></li>
-        <li><Link className='hover:underline'>Contact US</Link></li>
-        <li><Link className='hover:underline'>Dashboard</Link></li>
+        <li><Link to='/' className=''>
+            <div className='flex'>
+                <TiShoppingCart  className='text-3xl'/>
+                <div className="badge badge-secondary">{cart.length}</div>
+            </div>
 
+        </Link></li>
+        {/* <li><Link to='/secret' className='hover:underline'>Contact US</Link></li>
+        <li><Link className='hover:underline'>Dashboard</Link></li> */}
+        <div>
+            <button ></button>
+        </div>
         {
             user ? <>
-
+                {/* <span className=''>{user?.displayName}</span>*/}
                 <button onClick={handleLogOut}
-                    className="btn btn-warning font-bold">Log Out</button>
+                    className="  font-bold">
+                    <img className='rounded-full w-10 npm border-2 run dev' src={user?.photoURL} alt="" />
+                </button>
             </> : <>
                 <li> <Link to='/login'>
 
