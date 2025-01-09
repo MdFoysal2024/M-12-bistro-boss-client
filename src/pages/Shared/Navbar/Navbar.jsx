@@ -27,10 +27,10 @@ const Navbar = () => {
         <li><Link to='/' className='hover:underline'>Home</Link></li>
         <li><Link to='/menu' className='hover:underline'>Our Menu</Link></li>
         <li><Link to='/order/salad' className='hover:underline'>Food Order</Link></li>
-        <li><Link to='/' className=''>
+        <li><Link to='/dashboard/cart' className=''>
             <div className='flex'>
                 <TiShoppingCart  className='text-3xl'/>
-                <div className="badge badge-secondary">{cart.length}</div>
+                <div className="badge badge-secondary">+{cart.length}</div>
             </div>
 
         </Link></li>

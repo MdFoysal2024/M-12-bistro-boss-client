@@ -3,6 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
 
 
 const FoodCard = ({ item }) => {
@@ -12,6 +13,8 @@ const FoodCard = ({ item }) => {
     const { user } = useAuth();
     // console.log(user);
 
+    const [, refetch] = useCart();
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -19,11 +22,11 @@ const FoodCard = ({ item }) => {
     const axiosSecure = useAxiosSecure();
 
 
-    const handleAddToCart = food => {
+    const handleAddToCart = () => {
         // console.log(food, user.email)
 
         if (user && user.email) {
-            console.log(food)
+            //console.log(food)
 
             const cartItem = {
                 menuId: _id,
@@ -45,6 +48,9 @@ const FoodCard = ({ item }) => {
                             icon: 'success',
                             confirmButtonText: 'Thank You'
                         });
+
+                        // refetch the cart-->সার্ভারে ডাটা post করার পর  custom hooks এর  const [, refetch] = useCart(); এর  refetch(); কে কল করলে Navbar এর shopping cart এ ১, ১  করে add/যোগ হয়ে shopping cart এর মান আপডেট হবে।  
+                        refetch();
                     }
                 })
 
@@ -106,7 +112,7 @@ const FoodCard = ({ item }) => {
                     <p>{recipe}</p>
                     <div className="card-actions">
                         <button
-                            onClick={() => handleAddToCart(item)}
+                            onClick={handleAddToCart}
                             className='btn text-xl   border-0 border-b-4 border-orange-600 hover:text-orange-600 bg-orange-100 text-orange-600 hover:border-2 '>ADD TO CART</button>
                     </div>
                 </div>
