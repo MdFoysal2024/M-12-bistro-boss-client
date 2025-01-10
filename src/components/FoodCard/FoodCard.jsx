@@ -50,7 +50,11 @@ const FoodCard = ({ item }) => {
                         });
 
                         // refetch the cart-->সার্ভারে ডাটা post করার পর  custom hooks এর  const [, refetch] = useCart(); এর  refetch(); কে কল করলে Navbar এর shopping cart এ ১, ১  করে add/যোগ হয়ে shopping cart এর মান আপডেট হবে।  
+                        
+                        // refetch();--> tanstack query এর refetch(); কে ব্যবহার করলে সে ওয়েব সাইটকে অটো রিলোড করে আপডেট করবে
+
                         refetch();
+                        navigate('/dashboard/cart')
                     }
                 })
 

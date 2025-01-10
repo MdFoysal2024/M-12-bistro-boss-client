@@ -1,16 +1,20 @@
 
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaList, FaUsers } from 'react-icons/fa';
 import { FaBookBookmark, FaCalendar, FaRecordVinyl } from 'react-icons/fa6';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { MdFoodBank } from 'react-icons/md';
+import { MdBookmarks, MdFoodBank } from 'react-icons/md';
 import { TiShoppingCart } from 'react-icons/ti';
 import { NavLink, Outlet } from 'react-router-dom';
 import useCart from '../../hooks/useCart';
+import { IoIosContacts } from 'react-icons/io';
+import { ImSpoonKnife } from 'react-icons/im';
 
 const Dashboard = () => {
 
-const [cart] = useCart();
+    const [cart] = useCart();
 
+    //TODO: get isAdmin value from the database
+    const isAdmin = true;
 
 
     return (
@@ -24,27 +28,57 @@ const [cart] = useCart();
                 </div>
 
                 <ul className='menu font-semibold '>
-                    <li>
-                        <NavLink to="/dashboard/userHome">   <FaHome className='text-2xl' /> User Home</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/reservation">   <FaCalendar className='text-2xl' /> Reservation</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/cart">   <TiShoppingCart className='text-2xl' /> My Cart({cart.length})</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/review">   <FaRecordVinyl className='text-2xl' />Add a Review</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/bookings">   <FaBookBookmark className='text-2xl' /> My Bookings</NavLink>
-                    </li>
+
+                    {
+                        isAdmin ?
+                            <>
+
+                                <li>
+                                    <NavLink to="/dashboard/adminHome">   <FaHome className='text-2xl' /> Admin Home</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/addItems">   <ImSpoonKnife className='text-2xl' /> Add Items</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/manageItems">   <FaList className='text-xl' />Manage Items</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/bookings">   <MdBookmarks className='text-xl' />Manage Bookings</NavLink>
+                                </li>
+                               
+                                <li>
+                                    <NavLink to="/dashboard/users">   <FaUsers className='text-2xl' />All Users</NavLink>
+                                </li>
+                                
+                            </>
+
+                            :
+
+                            <>
+                                <li>
+                                    <NavLink to="/dashboard/userHome">   <FaHome className='text-2xl' /> User Home</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/reservation">   <FaCalendar className='text-2xl' /> Reservation</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/cart">   <TiShoppingCart className='text-2xl' /> My Cart({cart.length})</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/review">   <FaRecordVinyl className='text-2xl' />Add a Review</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/bookings">   <FaBookBookmark className='text-2xl' /> My Bookings</NavLink>
+                                </li>
+                            </>
+                    }
+
 
 
 
 
                     <div className="divider px-6"></div>
-
+                    {/* -----------Shared nav links-------------- */}
                     {/* Main Routes Section */}
                     <li>
                         <NavLink to="/">   <FaHome className='text-2xl' /> Home</NavLink>
@@ -55,16 +89,15 @@ const [cart] = useCart();
                     <li>
                         <NavLink to="/order/salad">   <MdFoodBank className='text-2xl' /> Food Order</NavLink>
                     </li>
-
-
-
+                    <li>
+                        <NavLink to="/contact">   <IoIosContacts className='text-2xl' /> Contact Us</NavLink>
+                    </li>
 
                 </ul>
 
-
-
-
             </div>
+
+
 
 
             {/* Dashboard Content Routes section */}

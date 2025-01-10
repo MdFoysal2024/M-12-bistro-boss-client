@@ -59,6 +59,8 @@ const Cart = () => {
                                 icon: "success"
                             });
                             refetch();
+
+                            // refetch();--> tanstack query এর refetch(); কে ব্যবহার করলে সে ওয়েব সাইটকে অটো রিলোড করে আপডেট করবে এবং ডিলিট করে পরবর্তি ডাটা/ডাটা কাউন্ট দেখানোর জন্য const remaining = data.filter() করে পরবর্তি ডাটা/ডাটা কাউন্ট দেখা লাগবে না, tanstack query এর refetch() সেটা আরো সহজে করে দিবে।
                         }
                     })
 

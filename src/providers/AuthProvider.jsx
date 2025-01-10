@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
 
 
@@ -12,14 +12,31 @@ const AuthProvider = ({ children }) => {
 
 
 
+
+    // new GoogleAuthProvider, signInWithPopup---> এর ব্যবহার করা হয় নতুন User কে সরাসরি  google দিয়ে Sign in করার জন্য
+
+    const googleProvider = new GoogleAuthProvider();
+    const googleSignIn = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider)
+    }
+
     //createUserWithEmailAndPassword---> এর ব্যবহার করা হয় নতুন User এর  Sign Up/Register করার জন্য
     const createUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
+    //updateProfile---> এর ব্যবহার করা হয় নতুন User এর  Sign Up/Register করার সময় User এর name ও photoURL যুক্ত করা এবং পরবর্তিতে আপডেট করার জন্য  
 
-    //signInWithEmailAndPassword---> এর ব্যবহার করা হয় নতুন User এর  Sign in/login করার জন্য
+    const updateUserProfile = (name, photo) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photo
+        })
+    }
+
+    //signInWithEmailAndPassword---> এর ব্যবহার করা হয় পুরাতন User এর email, password দিয়ে Sign in/login করার জন্য
     const signIn = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
@@ -33,14 +50,6 @@ const AuthProvider = ({ children }) => {
     }
 
 
-    //updateProfile---> এর ব্যবহার করা হয় নতুন User এর  Sign Up/Register করার সময় User এর name ও photoURL যুক্ত করা এবং পরবর্তিতে আপডেট করার জন্য  
-
-    const updateUserProfile = (name, photo) => {
-        return updateProfile(auth.currentUser, {
-            displayName: name,
-            photoURL: photo
-        })
-    }
 
 
 
@@ -64,6 +73,7 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         loading,
+        googleSignIn,
         signIn,
         createUser,
         updateUserProfile,

@@ -10,7 +10,7 @@ const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
     //console.log(user.email);
 
-  const [cart]  = useCart();
+    const [cart] = useCart();
 
 
     const handleLogOut = () => {
@@ -29,7 +29,7 @@ const Navbar = () => {
         <li><Link to='/order/salad' className='hover:underline'>Food Order</Link></li>
         <li><Link to='/dashboard/cart' className=''>
             <div className='flex'>
-                <TiShoppingCart  className='text-3xl'/>
+                <TiShoppingCart className='text-3xl' />
                 <div className="badge badge-secondary">+{cart.length}</div>
             </div>
 

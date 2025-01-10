@@ -8,42 +8,69 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 import { useForm } from "react-hook-form"
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
+
+    //custom hooks--->
+    const axiosPublic = useAxiosPublic();
+
 
 
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
+
     //npm install react-hook-form ---> Advance form setup
     const { register, handleSubmit, reset, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
-        console.log(data)
+        //console.log(data)
 
-        createUser(data.email, data.password)
+        createUser(data.email, data.password) //--> এই লাইন দিয়ে new user তৈরী হবে।
             .then(result => {
                 const user = result.user
                 console.log(user)
 
-                // setUser(user);
+
 
                 updateUserProfile(data.name, data.photoURL)
+                    //--> এই লাইন দিয়ে new user এর name, photoURL যুক্ত হবে।
+
                     .then(() => {
-                        console.log('User Profile Updated');
-                        reset();
+                        // console.log('User Profile Updated');
+
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+
+                        //কোনো ফর্ম ছাড়া user এর ডাটা কে সার্ভারে/ডাটাবেজে পাঠাতে axiosPublic.post('/users', userInfo) কে ব্যবহার করছি যেখানে কাস্টম হুক এর ভিতরে থাকা base Url দিয়ে  post method  করে সার্ভারে ডাটা পাঠিয়েছি । এখানে user Info গুলো একটি ভেরিয়েবলের ভিতরে রেখেছি {name: data.name, email: data.email} এখানে react-hook-form ব্যবহার করার কারণে সরাসরি name, email দিয়ে (data.name, data.email) দেয়া হইছে.
+
+                        axiosPublic.post('/users', userInfo)
+                            //--> এই লাইন দিয়ে new user এর শুধু name ও email নিয়ে সার্ভারে রেকর্ড হবে।
+
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('User data added to Database');
+
+                                    Swal.fire({
+                                        title: 'Sign Up',
+                                        text: 'SignUp Successfully',
+                                        icon: 'success',
+                                        confirmButtonText: 'Thank You'
+                                    });
+
+                                    navigate("/");
+                                    reset();  //form will be reset/clean
+                                }
+                            })
+
                     })
                     .catch((error) => {
                         console.log(error);
                     });
 
-                Swal.fire({
-                    title: 'Sign Up',
-                    text: 'SignUp Successfully',
-                    icon: 'success',
-                    confirmButtonText: 'Thank You'
-                });
-
-                navigate("/");
             })
             .catch((error) => {
 
@@ -179,9 +206,13 @@ const SignUp = () => {
                     </div>
                 </form>
 
-                <p>Already Have An Account <small className="text-orange-600 font-medium">
+                <p className="text-center">Already Have An Account <small className="text-orange-600 font-medium">
                     <Link to='/login' >Please Login</Link>
                 </small></p>
+                <div className="mx-8">
+
+        <SocialLogin className="w-full"></SocialLogin>
+</div>
 
             </div>
 
