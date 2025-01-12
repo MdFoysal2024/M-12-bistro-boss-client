@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+
 
 
 export const AuthContext = createContext();
@@ -9,7 +11,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
-
+    const axiosPublic = useAxiosPublic();
 
 
 
@@ -58,14 +60,38 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            console.log("Current/Present User After Login:", currentUser);
+            //console.log("Current/Present User After Login:", currentUser);
+            //setLoading(false);
+
+            if (currentUser?.email) {
+                const userInfo = { email: currentUser.email }
+
+                //-----------> jwt token create documentation-->
+
+                axiosPublic.post('/jwt', userInfo)
+                    .then(res => {
+                        //console.log('Login Create Token', res.data);
+                        if (res.data.token) {
+                            localStorage.setItem('Access-Token', res.data.token);
+                        }
+                        //setLoading(false);
+                    })
+            }
+
+            else {
+
+                //---Token কে cookies এ না রেখে localStorage এ রাখা হয়েছে-->
+                //Logout করলে token remove হয়ে যাবে।
+                localStorage.removeItem('Access-Token')
+            }
+
             setLoading(false);
         })
         return () => {
             return unsubscribe();
         }
 
-    })
+    }, [axiosPublic])
 
 
 

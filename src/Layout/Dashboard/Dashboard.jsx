@@ -8,13 +8,15 @@ import { NavLink, Outlet } from 'react-router-dom';
 import useCart from '../../hooks/useCart';
 import { IoIosContacts } from 'react-icons/io';
 import { ImSpoonKnife } from 'react-icons/im';
+import useAdmin from '../../hooks/useAdmin';
 
 const Dashboard = () => {
 
     const [cart] = useCart();
 
     //TODO: get isAdmin value from the database
-    const isAdmin = true;
+    // const isAdmin = true;
+     const [isAdmin] = useAdmin();
 
 
     return (

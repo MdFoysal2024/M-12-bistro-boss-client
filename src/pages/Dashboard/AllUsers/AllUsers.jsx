@@ -4,15 +4,30 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAdmin from "../../../hooks/useAdmin";
 
 
 const AllUsers = () => {
 
+const [isAdmin] = useAdmin();
+
+console.log(isAdmin);
     const axiosSecure = useAxiosSecure();
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
+
+            // const res = await axiosSecure.get('/users', {
+            //     //---Token কে cookies এ না রেখে localStorage এ রাখা হয়েছে-->
+            //     //headers --> এই মেথড কে axios থেকে আনা হয়েছে  এবং এখন থেকে headers দিয়ে Token কে সার্ভারে পাঠানো হয়েছে।   
+            //     headers: {
+            //         authorization: `Bearer ${localStorage.getItem('Access-Token')}`
+            //     }
+            // });
+
+
+            // এখানে const res এ headers এর ভিতরে authorization টোকেন না রেখে axiosSecure এর ভিতরে রেখেছি যাতে সব জায়গা হতে পাওয়া যায় ।
             const res = await axiosSecure.get('/users');
             return res.data;
         }
@@ -21,9 +36,26 @@ const AllUsers = () => {
 
 
     //User Admin creation Functionality start------->
-const handleMakeAdmin =user=>{
-    console.log(user)
-}
+    const handleMakeAdmin = user => {
+        //console.log(user);
+        //console.log('User Admin creation Functionality start', user._id)
+        axiosSecure.patch(`/users/admin/${user._id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `${user.name} is an Admin Now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+
+
+    }
 
 
 
@@ -115,9 +147,11 @@ const handleMakeAdmin =user=>{
                                 </td>
 
                                 <th>
-                                    <button
+                                    {user.role === 'admin' ? 'Admin' : <button
                                         onClick={() => handleMakeAdmin(user)}
-                                        className=" p-3 btn text-xl text-white bg-amber-600 border-2 rounded-lg "><FaUsers /></button>
+                                        className=" p-3  text-xl text-white bg-amber-600 border-2 rounded-lg "><FaUsers /></button>
+
+                                    }
                                 </th>
                                 <th>
                                     <button
