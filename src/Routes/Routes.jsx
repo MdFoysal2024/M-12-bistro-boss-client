@@ -77,7 +77,8 @@ const router = createBrowserRouter([
       //normal user routes---->
       {
         path: 'addItems',
-        element: <AdminRoutes><AddItems></AddItems></AdminRoutes>
+        element: <AddItems></AddItems>
+        //element: <AdminRoutes><AddItems></AddItems></AdminRoutes>
     
       },
       {
