@@ -61,7 +61,7 @@ const Dashboard = () => {
                                     <NavLink to="/dashboard/userHome">   <FaHome className='text-2xl' /> User Home</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/reservation">   <FaCalendar className='text-2xl' /> Reservation</NavLink>
+                                    <NavLink to="/dashboard/paymentHistory">   <FaCalendar className='text-xl' />Payment History</NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/cart">   <TiShoppingCart className='text-2xl' /> My Cart({cart.length})</NavLink>
